@@ -11,18 +11,20 @@ if not default_name:
 def home():
     return render_template('login.html')
 
-@app.route('/success/<name>')
-def success(name):
-    return f'Привіт {name}\n Вітання {default_name}' 
+@app.route('/salut/<name>')
+def salut(name):
+    return {"Greeting": f'Привіт {name}',
+             "Salutation": f'Вітання {default_name}' 
+    }
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     if request.method == 'POST':
         user = request.form['nm']
-        return redirect(url_for('success', name=user))
+        return redirect(url_for('salut', name=user))
     else:
         user = request.args.get('nm')
-        return redirect(url_for('success', name=user))
+        return redirect(url_for('salut', name=user))
 
 if __name__ == '__main__':
     app.run(debug=True)
